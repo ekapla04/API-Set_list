@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+	<title>API practice</title>
+	<meta charset="utf-8"/>
+	<script>
+		function getCrimeRate() {
+			request = new XMLHttpRequest();
+			console.log("1 - request object created");
+ 
+        
+		request.open("GET", "https://api.ipify.org?format=json", true);
+
+
+			console.log("2 - opened request file");
+ 
+
+			request.onreadystatechange = function() {
+				console.log("3 - readystatechange event fired.");
+ 
+				if (request.readyState == 4 && request.status == 200) {
+
+					console.log("5 - response received");
+					result = request.responseText;
+					IP = JSON.parse(result);
+					
+                    document.getElementById("API/IP").innerHTML ="IP Adress: " + IP["ip"]; 
+					
+				}
+				else if (request.readyState == 4 && request.status != 200) {
+                    document.getElementById("API/IP").innerHTML = "status request: " + request.status;
+
+				}
+
+				else if (request.readyState == 3) {
+					document.getElementById("API/IP").innerHTML = "Too soon!  Try again";
+
+				}
+
+			}
+			request.send();
+			console.log("4 - Request sent");
+        }
+
+	</script>
+</head>
+
+
+<body onload="getCrimeRate()">
+
+	<h1>IP ADDRESS</h1>
+    <div id="API/IP">
+        The API I selected retrieves your IP address.
+    </div>
+    <div id = "API/BINARY"></div>
+    <div id="Website">
+        I found this API on 
+        <a href='https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/' target='_blank' style='text-decoration:none'>
+        Mixed Analytics</a>
+    </div>
+    <div id="Options">
+        I used ID "ip" to fetch the IP address of my computer
+    </div>
+    <div id="Applications">
+        This would be a helpful tool for web hosting or if someone wanted to
+        check their IP adress and couln't find it locally on their computer.
+    </div>
+</body>
+</html>
