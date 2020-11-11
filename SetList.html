@@ -1,0 +1,172 @@
+<html>
+<body>
+
+<div id="serialize">
+    <h1>
+        Serialized String:
+    </h1>
+</div>
+
+<div id="title">
+    <h1>
+        <hr>
+        Pretty Print: 
+    </h1>
+</div>
+<h1>
+    <hr>
+    Select Display: 
+</h1>
+
+<!-- <div id ="song_info"></div> -->
+
+<script>
+    var Songs =
+        [ 
+        {   
+            "title" : "Ophelia",
+            "artist_name" : "The Band",
+            "genre" : "Rock",
+            "release_date" : "1975",
+        },
+        {   
+            "title" : "Lost my Head there",
+            "artist_name" : "Kurt Vile",
+            "genre" : "Rock",
+            "release_date" : "2015",
+        },
+        {   
+            "title" : "Unknown Legend",
+            "artist_name" : "Neil Young",
+            "genre" : "Rock",
+            "release_date" : "1992",
+        },   
+        {   
+            "title" : "Ripple",
+            "artist_name" : "Grateful Dead",
+            "genre" : "Rock",
+            "release_date" : "1970",
+        },
+        {   
+            "title" : "In The Kingdom",
+            "artist_name" : "Mazzy Star",
+            "genre" : "Alt. Rock",
+            "release_date" : "2013",
+        },
+        {   
+            "title" : "Mixer",
+            "artist_name" : "Nap Eyes",
+            "genre" : "Alt. Rock",
+            "release_date" : "2016",
+        },
+        {   
+            "title" : "Sense",
+            "artist_name" : "King Gizzard and The Lizard Wizard",
+            "genre" : "Funk",
+            "release_date" : "2015",
+        },
+        {   
+            "title" : "Friday Morning",
+            "artist_name" : "Khruangbin",
+            "genre" : "Funk",
+            "release_date" : "2018",
+        },
+        {   
+            "title" : "Another",
+            "artist_name" : "Ruru",
+            "genre" : "Funk",
+            "release_date" : "2018",
+        },
+        {   
+            "title" : "Lilly",
+            "artist_name" : "Toro y Moi",
+            "genre" : "Funk",
+            "release_date" : "2015",
+        } 
+        ]
+
+    /********* serialized string *********/
+    var songsString = JSON.stringify(Songs);
+    document.getElementById("serialize").innerHTML += songsString;
+
+
+    printSongs(Songs);
+ 
+    function printSongs(Songs) 
+    { 
+        for (var i in Songs) {
+            var title = Songs[i]["title"];
+            var name = Songs[i]["artist_name"];
+            var genre = Songs[i]["genre"];
+            var release_date = Songs[i]["release_date"];
+            document.getElementById("title").innerHTML += title.bold() + "<br>"
+                                                          + "artist: ".italics()
+                                                          + name + "<br>"
+                                                          + "genre: ".italics()
+                                                          + genre + "<br>"
+                                                          + "release date: ".italics()
+                                                          + release_date 
+                                                          + "<br><br><br";
+            
+        }
+    } 
+
+    function makeSelect()
+    {
+        var name = ""
+        var t= "";
+        t = "<select name='" + name + "' size='1'>";
+        genres = ["rock", "alt rock", "funk"]    
+        for (j = 0; j < 3; j++) {
+            t += "<option>" + genres[j] + "</option>";
+            t+= "</select>"; 
+            return t;
+        }
+        filterDisplay(Songs, genres[j]);
+    }
+
+    function filterDisplay(Songs){
+        var selected_genre = document.display_genre.genre.value;
+        for (var i in Songs) {
+            var genre = Songs[i]["genre"];
+            if (genre === selected_genre) {
+                var title = Songs[i]["title"];
+                var name = Songs[i]["artist_name"];
+                var release_date = Songs[i]["release_date"];
+                document.getElementById("select").innerHTML += title.bold() + "<br>"
+                                                              + "artist: ".italics()
+                                                              + name + "<br>"
+                                                              + "genre: ".italics()
+                                                              + genre + "<br>"
+                                                              + "release date: ".italics()
+                                                              + release_date 
+                                                              + "<br><br><br";
+            }
+            
+        }
+    }
+
+    function clearDisplay() {
+        document.getElementById("select").innerHTML = "";
+    }
+ 
+</script>
+
+<form name="display_genre">
+    <h2>Select which genre you would like displayed</h2>
+
+    <select name="genre" id="genre" onchange = clearDisplay() 
+            style = "font-size: 20px; width: 70px; height: 40px;">
+        <option value="Rock">rock</option>
+        <option value="Alt. Rock">alt rock</option>
+        <option value="Funk">funk</option>
+    </select>
+    <input type = "button" style = "font-size: 20px; width: 70px;
+           height: 40px;" onclick="filterDisplay(Songs)"
+        id= "filter"
+        value="Filter">
+    
+    </form>
+    <div id="select"></div>
+</body>
+</html>
